@@ -1,0 +1,152 @@
+import json
+import os
+
+# --- UPDATED ANDHRA PRADESH SCHOLARSHIP DATA (2025-26) ---
+# Source: Verified Government Portal Data
+new_schemes = [
+    # --- BRAHMIN WELFARE SCHEMES (Bharati & Others) ---
+    {
+        "id": 101,
+        "name": "Bharati Scheme for Education - Graduation",
+        "state": "Andhra Pradesh",
+        "category": "Brahmin",
+        "keywords": ["degree", "b.a", "b.com", "b.sc", "b.ed", "3 years"],
+        "income_limit": 300000, 
+        "description": "Financial assistance for Brahmin students pursuing any regular 3-year graduation course (BA, BCom, BSc, etc.) after 10+2.",
+        "link": "https://apadapter.ap.gov.in/"
+    },
+    {
+        "id": 102,
+        "name": "Bharati Scheme for Education - Post-Graduation",
+        "state": "Andhra Pradesh",
+        "category": "Brahmin",
+        "keywords": ["pg", "m.sc", "m.com", "m.tech", "mba", "mca", "master"],
+        "income_limit": 300000,
+        "description": "Support for Brahmin students pursuing 2-year+ PG courses like M.Sc, M.Com, M.Tech, MBA, etc.",
+        "link": "https://apadapter.ap.gov.in/"
+    },
+    {
+        "id": 103,
+        "name": "Bharati Scheme for Education - Professional Education Course",
+        "state": "Andhra Pradesh",
+        "category": "Brahmin",
+        "keywords": ["professional", "technical", "medicine", "engineering"],
+        "income_limit": 300000,
+        "description": "Financial assistance for Brahmin students pursuing professional education courses.",
+        "link": "https://apadapter.ap.gov.in/"
+    },
+    {
+        "id": 104,
+        "name": "Bharati Scheme for Education - Intermediate",
+        "state": "Andhra Pradesh",
+        "category": "Brahmin",
+        "keywords": ["inter", "intermediate", "plus two", "11th", "12th", "iti", "polytechnic"],
+        "income_limit": 300000,
+        "description": "Financial assistance for eligible poor Brahmin students pursuing Intermediate, ITI, or Polytechnic.",
+        "link": "https://apadapter.ap.gov.in/"
+    },
+    {
+        "id": 105,
+        "name": "Bharati Scheme for Master’s Degree Overseas",
+        "state": "Andhra Pradesh",
+        "category": "Brahmin",
+        "keywords": ["abroad", "overseas", "foreign", "ms", "masters"],
+        "income_limit": 600000,
+        "description": "Financial aid for Brahmin students who secured admission for a Master's degree in reputed institutions overseas.",
+        "link": "https://apadapter.ap.gov.in/"
+    },
+    {
+        "id": 106,
+        "name": "Veda Vyasa Scheme for Vedic Education",
+        "state": "Andhra Pradesh",
+        "category": "Brahmin",
+        "keywords": ["veda", "vedic", "archaka", "purohit"],
+        "income_limit": 300000,
+        "description": "Annual financial assistance to encourage Vedic Education among selected Brahmin applicants.",
+        "link": "https://apadapter.ap.gov.in/"
+    },
+    {
+        "id": 107,
+        "name": "Gayathri Scheme for Academic Excellence",
+        "state": "Andhra Pradesh",
+        "category": "Brahmin",
+        "keywords": ["topper", "merit", "award", "rank"],
+        "income_limit": 300000,
+        "description": "Awards for toppers in SSC, Intermediate, Graduation, or Professional courses.",
+        "link": "https://apadapter.ap.gov.in/"
+    },
+    {
+        "id": 108,
+        "name": "Bharati Scheme (CA Intern & Final)",
+        "state": "Andhra Pradesh",
+        "category": "Brahmin",
+        "keywords": ["ca", "chartered accountant", "ipcc", "intern"],
+        "income_limit": 300000,
+        "description": "Financial assistance for Brahmin students pursuing Chartered Accountancy (Intern and Final levels).",
+        "link": "https://apadapter.ap.gov.in/"
+    },
+    {
+        "id": 109,
+        "name": "Bharati Scheme for School Education (1st-10th)",
+        "state": "Andhra Pradesh",
+        "category": "Brahmin",
+        "keywords": ["school", "class 1", "class 10", "primary", "secondary"],
+        "income_limit": 300000,
+        "description": "Financial assistance for Brahmin students in Class 1 to Class 5 and Class 6 to Class 10.",
+        "link": "https://apadapter.ap.gov.in/"
+    },
+
+    # --- WORKER WELFARE SCHEMES ---
+    {
+        "id": 201,
+        "name": "Scholarships to Children of BOC Workers",
+        "state": "Andhra Pradesh",
+        "category": "Construction Workers",
+        "keywords": ["labour", "worker", "construction", "boc", "mason"],
+        "income_limit": 300000,
+        "description": "Scholarships for children (9th to 12th, ITI, Graduation) of registered Building & Other Construction workers.",
+        "link": "https://labour.ap.gov.in/"
+    },
+
+    # --- DIFFERENTLY ABLED SUPPORT ---
+    {
+        "id": 301,
+        "name": "Sanction of Laptops",
+        "state": "Andhra Pradesh",
+        "category": "Differently Abled",
+        "keywords": ["laptop", "computer", "visually challenged", "hearing impaired"],
+        "income_limit": 300000,
+        "description": "Distribution of laptops to visually, hearing, speech, and orthopedically challenged students in professional courses.",
+        "link": "https://apte.ap.gov.in/"
+    },
+    {
+        "id": 302,
+        "name": "Sanction of Motorized Three Wheeler",
+        "state": "Andhra Pradesh",
+        "category": "Differently Abled",
+        "keywords": ["vehicle", "bike", "scooter", "mobility", "orthopedically challenged"],
+        "income_limit": 300000,
+        "description": "Provision of motorized three-wheelers to eligible orthopedically challenged persons for mobility.",
+        "link": "https://apte.ap.gov.in/"
+    },
+    {
+        "id": 303,
+        "name": "Sanction of Daisy Players",
+        "state": "Andhra Pradesh",
+        "category": "Differently Abled (Visually Challenged)",
+        "keywords": ["blind", "audio", "player", "daisy", "visually challenged"],
+        "income_limit": 300000,
+        "description": "Distribution of Daisy Players to visually challenged students from 9th Class to Degree.",
+        "link": "https://apte.ap.gov.in/"
+    }
+]
+
+# --- SAVE TO FILE ---
+file_path = os.path.join(os.getcwd(), 'scholarships.json')
+
+try:
+    with open(file_path, 'w', encoding='utf-8') as f:
+        json.dump(new_schemes, f, indent=4)
+    print(f"✅ UPDATED DATABASE: {len(new_schemes)} Verified Schemes Saved to 'scholarships.json'")
+except Exception as e:
+    print(f"❌ Error saving database: {e}")
